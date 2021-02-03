@@ -19,7 +19,9 @@ class Dna:
 
     def transcribe(self):
 
-        return self.sequence.replace('T', 'U')
+        self.sequence = self.sequence.replace('T', 'U')
+
+        return self
 
     def reverse_complement(self):
 
@@ -35,7 +37,9 @@ class Dna:
             if base == "C":
                 paired_sequence += "G"
 
-        return paired_sequence[::1]
+        self.sequence = paired_sequence[::-1]
+
+        return self
 
     def gc_content(self):
 
@@ -60,9 +64,12 @@ class Dna:
                 residue = codon_table[codon]
                 protein += residue
 
+            # If codon not recognised, add missing residue '_'
             except:
-                pass
+                protein += '_'
 
             count += 3
 
-        return protein
+        self.sequence = protein
+
+        return self
