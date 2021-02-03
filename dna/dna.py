@@ -43,3 +43,26 @@ class Dna:
         gc_content = (gc / len(self.sequence) * 100)
 
         return gc_content
+
+    def translate(self):
+
+        # Generate codon table
+        bases = "UCAG"
+        codons = [a + b + c for a in bases for b in bases for c in bases]
+        amino_acids = 'FFLLSSSSYY**CC*WLLLLPPPPHHQQRRRRIIIMTTTTNNKKSSRRVVVVAAAADDEEGGGG'
+        codon_table = dict(zip(codons, amino_acids))
+
+        protein = ''
+        count = 0
+        while count < len(self.sequence):
+            codon = self.sequence[count:count+3]
+            try:
+                residue = codon_table[codon]
+                protein += residue
+
+            except:
+                pass
+
+            count += 3
+
+        return protein
