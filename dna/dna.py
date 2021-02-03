@@ -36,3 +36,10 @@ class Dna:
                 paired_sequence += "G"
 
         return paired_sequence[::1]
+
+    def gc_content(self):
+
+        gc = self.sequence.count('C') + self.sequence.count('G')
+        gc_content = (gc / len(self.sequence) * 100)
+
+        return gc_content
