@@ -1,16 +1,22 @@
 class Dna:
 
-    def __init__(self, sequence):
-        self.sequence = sequence.upper()
+    def __init__(self, seq):
+
+        self.seq = seq.upper()
+
+        # Check sequence conforms
+        for base in self.seq:
+            if base not in 'AGCTU':
+                raise NameError('Unrecognized base in sequence.')
 
     def composition(self):
 
         comp = {}
-        comp["A"] = self.sequence.count("A")
-        comp["C"] = self.sequence.count("C")
-        comp["G"] = self.sequence.count("G")
-        comp["T"] = self.sequence.count("T")
-        comp["U"] = self.sequence.count("U")
+        comp["A"] = self.seq.count("A")
+        comp["C"] = self.seq.count("C")
+        comp["G"] = self.seq.count("G")
+        comp["T"] = self.seq.count("T")
+        comp["U"] = self.seq.count("U")
 
         if comp["U"] == 0:
             comp.pop("U")
@@ -19,32 +25,32 @@ class Dna:
 
     def transcribe(self):
 
-        self.sequence = self.sequence.replace('T', 'U')
+        self.seq = self.seq.replace('T', 'U')
 
         return self
 
     def reverse_complement(self):
 
-        paired_sequence = ""
+        paired_seq = ""
 
-        for base in self.sequence:
+        for base in self.seq:
             if base == "A":
-                paired_sequence += "T"
+                paired_seq += "T"
             if base == "T":
-                paired_sequence += "A"
+                paired_seq += "A"
             if base == "G":
-                paired_sequence += "C"
+                paired_seq += "C"
             if base == "C":
-                paired_sequence += "G"
+                paired_seq += "G"
 
-        self.sequence = paired_sequence[::-1]
+        self.seq = paired_seq[::-1]
 
         return self
 
     def gc_content(self):
 
-        gc = self.sequence.count('C') + self.sequence.count('G')
-        gc_content = (gc / len(self.sequence) * 100)
+        gc = self.seq.count('C') + self.seq.count('G')
+        gc_content = (gc / len(self.seq) * 100)
 
         return gc_content
 
@@ -58,8 +64,8 @@ class Dna:
 
         protein = ''
         count = 0
-        while count < len(self.sequence):
-            codon = self.sequence[count:count+3]
+        while count < len(self.seq):
+            codon = self.seq[count:count+3]
             try:
                 residue = codon_table[codon]
                 protein += residue
@@ -70,6 +76,6 @@ class Dna:
 
             count += 3
 
-        self.sequence = protein
+        self.seq = protein
 
         return self
