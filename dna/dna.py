@@ -70,6 +70,10 @@ class Dna:
         if 'T' in self.seq:
             raise NameError('Sequence is not RNA, chain .transcribe() method to convert DNA --> RNA')
 
+        if len(self.seq) % 3 != 0:
+            import warnings
+            warnings.warn('Warning: Sequence is truncated.')
+
         # Generate codon table
         bases = "UCAG"
         codons = [a + b + c for a in bases for b in bases for c in bases]
@@ -87,6 +91,8 @@ class Dna:
             # If codon not recognised, add missing residue '_'
             except:
                 protein += '_'
+                import warnings
+                warnings.warn('Warning: Sequence contains unrecognised codons.')
 
             count += 3
 
