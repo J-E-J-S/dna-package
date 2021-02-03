@@ -56,6 +56,10 @@ class Dna:
 
     def translate(self):
 
+        # Check that seq isn't DNA
+        if 'T' in self.seq:
+            raise NameError('Sequence is not RNA, chain .transcribe() method to convert DNA --> RNA')
+
         # Generate codon table
         bases = "UCAG"
         codons = [a + b + c for a in bases for b in bases for c in bases]
