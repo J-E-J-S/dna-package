@@ -25,6 +25,10 @@ class Dna:
 
     def transcribe(self):
 
+        # Check sequence is not RNA
+        if 'U' in self.seq:
+            raise NameError('Sequence is already RNA.')
+
         self.seq = self.seq.replace('T', 'U')
 
         return self
@@ -42,6 +46,12 @@ class Dna:
                 paired_seq += "C"
             if base == "C":
                 paired_seq += "G"
+
+            # reverse_complement intended for DNA, so will warn if RNA seq
+            if base == "U":
+                paired_seq += "A"
+                import warnings
+                warnings.warn("Warning: This sequence contains RNA.")
 
         self.seq = paired_seq[::-1]
 
