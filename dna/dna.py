@@ -21,6 +21,9 @@ class Dna:
         if comp["U"] == 0:
             comp.pop("U")
 
+        if comp["T"] == 0:
+            comp.pop("T")
+
         return comp
 
     def transcribe(self):
