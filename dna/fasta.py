@@ -61,10 +61,3 @@ class Fasta:
         self.label = labels
 
         return self
-
-
-print (
-
-Fasta(r'C:/Users/James/Documents/dna-package/dna/test.fasta').multi_parse()
-
-)
