@@ -48,7 +48,7 @@ class Fasta:
 
                 # Remove newline formatting
                 if value.endswith('\n'):
-                    labels.append(value[:-2]) # Better than replace as prevents erroneous removal
+                    labels.append(value[:-1]) # Better than replace as prevents erroneous removal
                 else:
                     labels.append(value)
 
