@@ -4,7 +4,7 @@
 
 ## Functions
 
-### dna.py
+### seq.py
     composition - Returns base composition of nucleotide polymer as dictionary.
 
     transcribe - Returns transcribed DNA as mRNA.
@@ -14,6 +14,8 @@
     gc_content - Returns GC contents of polymer as percentage (%).
 
     translate - Returns primary sequence of protein polypeptide.
+
+    find_motif - Returns positions of specified motif with sequence. [(start, end), (start, end)...]
 
 ### fasta.py
     parse - Returns fasta label and sequence from fasta file containing single sequence
