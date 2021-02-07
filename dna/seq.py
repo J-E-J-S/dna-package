@@ -1,4 +1,4 @@
-class Dna:
+class Seq:
 
     def __init__(self, seq):
 
@@ -102,3 +102,17 @@ class Dna:
         self.seq = protein
 
         return self
+
+    def find_motif(self, motif):
+
+        positions = []
+        pos = 0
+        while pos < len(self.seq):
+            i = self.seq.find(motif, pos, pos+len(motif))
+
+            if i != -1:
+                positions.append((pos + 1, pos + len(motif)))
+
+            pos += 1
+
+        return positions
