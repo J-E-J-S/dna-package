@@ -103,18 +103,33 @@ class Seq:
 
         return self
 
-    def find_motif(self, motif):
+    def find_motif(self, motif, type='dna'):
 
-        motif = motif.upper()
+        import re
 
-        positions = []
-        pos = 0
-        while pos < len(self.seq):
-            i = self.seq.find(motif, pos, pos+len(motif))
+        length = len(motif)
 
-            if i != -1:
-                positions.append((pos + 1, pos + len(motif)))
+        # Create regex expression from motif
+        if type == 'dna':
+            motif = motif.replace('R', '[AG]')
+            motif = motif.replace('Y', '[CTU]')
+            motif = motif.replace('K', '[GTU]')
+            motif = motif.replace('M', '[AC]')
+            motif = motif.replace('S', '[CG]')
+            motif = motif.replace('W', '[ATU]')
+            motif = motif.replace('B', '[^A]')
+            motif = motif.replace('D', '[^C]')
+            motif = motif.replace('H', '[^G]')
+            motif = motif.replace('V', '[^U]')
+            motif = motif.replace('N', '[AGUTC]')
 
-            pos += 1
+        if type == 'protein':
+            motif = motif.replace('B', '[DN]')
+            motif = motif.replace('J', '[LI]')
+            motif = motif.replace('Z', '[EQ]')
+            motif = motif.replace('X', '[^\*-]')
+
+        # Finditer with lookahead to allow motif overlap 
+        positions = [(match.start()+1, match.start()+length)  for match in re.finditer('(?=' + motif + ')', self.seq)]
 
         return positions
