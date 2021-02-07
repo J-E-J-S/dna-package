@@ -105,6 +105,8 @@ class Seq:
 
     def find_motif(self, motif):
 
+        motif = motif.upper()
+
         positions = []
         pos = 0
         while pos < len(self.seq):
