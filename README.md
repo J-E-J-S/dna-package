@@ -17,6 +17,8 @@
 
     find_motif - Returns positions of specified motif with sequence. [(start, end), (start, end)...]
 
+    ORFs - Returns a dictionary of open reading frames from an input DNA sequence. 
+
 ### fasta.py
     parse - Returns fasta label and sequence from fasta file containing single sequence
 
