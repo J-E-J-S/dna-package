@@ -6,8 +6,13 @@ class Seq:
 
         # Check sequence conforms
         for base in self.seq:
-            if base not in 'AGCTU':
+            if base not in 'AGCTUN':
                 raise NameError('Unrecognized base in sequence.')
+
+                if base == 'N':
+                    import warnings
+                    warnings.warn("Warning: This sequence contains undefined nucleotides.")
+
 
     def composition(self):
 
