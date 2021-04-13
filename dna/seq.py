@@ -6,8 +6,13 @@ class Seq:
 
         # Check sequence conforms
         for base in self.seq:
-            if base not in 'AGCTU':
+            if base not in 'AGCTUN':
                 raise NameError('Unrecognized base in sequence.')
+
+                if base == 'N':
+                    import warnings
+                    warnings.warn("Warning: This sequence contains undefined nucleotides.")
+
 
     def composition(self):
 
@@ -31,6 +36,9 @@ class Seq:
         # Check sequence is not RNA
         if 'U' in self.seq:
             raise NameError('Sequence is already RNA.')
+        if 'N' in self.seq:
+            import warnings
+            warnings.warn('Warning: This sequence contains ambiguous sequences.')
 
         self.seq = self.seq.replace('T', 'U')
 
@@ -55,6 +63,12 @@ class Seq:
                 paired_seq += "A"
                 import warnings
                 warnings.warn("Warning: This sequence contains RNA.")
+
+            # Warn if sequence contains undefined nucleotides
+            if base == "N":
+                paired_seq += "N"
+                import warnings
+                warnings.warn("Warning: This sequence contains ambiguous sequences.")
 
         self.seq = paired_seq[::-1]
 
@@ -129,7 +143,33 @@ class Seq:
             motif = motif.replace('Z', '[EQ]')
             motif = motif.replace('X', '[^\*-]')
 
-        # Finditer with lookahead to allow motif overlap 
+        # Finditer with lookahead to allow motif overlap
         positions = [(match.start()+1, match.start()+length)  for match in re.finditer('(?=' + motif + ')', self.seq)]
 
         return positions
+
+    def ORFs(self):
+
+        """"
+        Returns the 6 reading frames for a DNA sequence as a dictionary
+        ORFs 1-6: ORF 1-3 = Forward, ORF 4-6 = Reverse
+        """
+        ORFs = {} # Dictionary to hold frames and ids: 1-6
+
+        frame = 0
+        while frame < 3:
+            # Forward Frame
+            sequence = self.seq # Returns a string
+            id = 'ORF-' + str(frame+1) # Re-index
+            item = Seq(sequence[frame:]) # Splice sequence to reading frame
+            ORFs[id] = item.transcribe().translate().seq # Translate ORF, has to be DNA
+
+            # Reverse Frame
+            id = 'ORF-' + str(frame+4)
+            item = self.reverse_complement().seq
+            item = Seq(item[frame:])
+            ORFs[id] = item.transcribe().translate().seq
+
+            frame +=1
+
+        return ORFs
