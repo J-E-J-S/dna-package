@@ -31,6 +31,9 @@ class Seq:
         # Check sequence is not RNA
         if 'U' in self.seq:
             raise NameError('Sequence is already RNA.')
+        if 'N' in self.seq:
+            import warnings
+            warnings.warn('Warning: This sequence contains ambiguous sequences.')
 
         self.seq = self.seq.replace('T', 'U')
 
@@ -55,6 +58,12 @@ class Seq:
                 paired_seq += "A"
                 import warnings
                 warnings.warn("Warning: This sequence contains RNA.")
+
+            # Warn if sequence contains undefined nucleotides
+            if base == "N":
+                paired_seq += "N"
+                import warnings
+                warnings.warn("Warning: This sequence contains ambiguous sequences.")
 
         self.seq = paired_seq[::-1]
 
