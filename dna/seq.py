@@ -105,9 +105,9 @@ class Seq:
                 residue = codon_table[codon]
                 protein += residue
 
-            # If codon not recognised, add missing residue '_'
+            # If codon not recognised, add missing residue '-'
             except:
-                protein += '_'
+                protein += '-'
                 import warnings
                 warnings.warn('Warning: Sequence contains unrecognised codons.')
 
